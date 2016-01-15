@@ -31,8 +31,10 @@
 		gmarket:['http://search.gmarket.co.kr/search.aspx?selecturl=total&sheaderkey=&gdlc=&SearchClassFormWord=goodsSearch&keywordOrg=%BF%EE%B5%BF%C8%AD&keywordCVT=%BF%EE%B5%BF%C8%AD%2C%BF%EE%B5%BF%C8%AD%C3%DF%C3%B5%2C%BF%EE%B5%BF%C8%AD%B2%F6%2C%BF%EE%B5%BF%C8%AD%B1%F2%C3%A2%2C%BF%EE%B5%BF%C8%AD+%C0%CC%BE%EE%C6%F9&keywordCVTi=1&keyword='],
 		enuri:['http://www.enuri.com/search/EnuriSearch.jsp?keyword=']
 	};
-			var keyword = decodeURI(param.keyword);
-			var url = urlBox[param.site][0] + escape(keyword);
+			var site = urlBox[param.site];
+			var keywordOrigin = decodeURI(param.keyword);
+			var keyword = (param.site === 'naver')?keywordOrigin:escape(keywordOrigin);
+			var url = site[0] + keyword;
 			return window.location.replace(url);
 		}
 		var form = document.querySelector('form');
