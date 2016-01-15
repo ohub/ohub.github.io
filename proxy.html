@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="ko-KR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proxy Testbed</title>
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script>
+(function(window){
+	'use strict';
+	var getParameter = function(){
+		var urlParam = window.location.search.substring(1);
+		var params = urlParam.split('&');
+		if (params.length === 0 || params[0] === '') return null;
+		var returnParam = {};
+		for (var i = 0, iMax = params.length; i < iMax; i++) {
+			var origin = params[i].split('=');
+			returnParam[origin[0]] = origin[1];
+		}
+		return returnParam;
+	};
+	var param;
+	var tab;
+	var init = function(){
+		param = getParameter();
+		if (param) {
+			html.className = 'block-screen-mode';
+			var urlBox = {
+		naver:['http://shopping.naver.com/search/all_search.nhn?cat_id=&frm=NVSHATC&nlu=true&query='],
+		auction:['http://search.auction.co.kr/search/search.aspx?itemno=&nickname=&frm=hometab&dom=auction&isSuggestion=No&retry=&Fwk=%BF%EE%B5%BF%C8%AD&acode=SRP_SU_0100&arraycategory=&keyword='],
+		gmarket:['http://search.gmarket.co.kr/search.aspx?selecturl=total&sheaderkey=&gdlc=&SearchClassFormWord=goodsSearch&keywordOrg=%BF%EE%B5%BF%C8%AD&keywordCVT=%BF%EE%B5%BF%C8%AD%2C%BF%EE%B5%BF%C8%AD%C3%DF%C3%B5%2C%BF%EE%B5%BF%C8%AD%B2%F6%2C%BF%EE%B5%BF%C8%AD%B1%F2%C3%A2%2C%BF%EE%B5%BF%C8%AD+%C0%CC%BE%EE%C6%F9&keywordCVTi=1&keyword='],
+		enuri:['http://www.enuri.com/search/EnuriSearch.jsp?keyword=']
+	};
+			var keyword = decodeURI(param.keyword);
+			var url = urlBox[param.site][0] + escape(keyword);
+			return window.location.replace(url);
+		}
+		var form = document.querySelector('form');
+		form.addEventListener('submit',function(event){
+			event.preventDefault();
+			var $form = $(event.target);
+			var baseUrl = location.href;
+			var param = $form.serialize();
+			var url = baseUrl + '?' + param;
+			console.log(url);
+			if (!tab){
+				return tab = window.open(url, 'tab', 'location=yes');
+			}
+			console.log(url);
+			return tab.location.replace(url);
+		},false);
+	};
+	var html = document.documentElement;
+	var siteType = ['naver', 'enuri', 'gmarket', 'auction'];
+	return window.param = {
+		init: init,
+	};
+})(window);
+</script>
+<style>
+.block-screen-mode .screen-block{
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	background-color:#fff;
+}
+</style>
+</head>
+<body>
+<form action="proxy.html" method="get">
+	<select name="site">
+		<option value="naver" selected>네이버</option>
+		<option value="auction">옥션</option>
+		<option value="gmarket">지마켓</option>
+		<option value="enuri">에누리</option>
+	</select>
+	<input type="search" name="keyword" value="PC케이스">
+	<button type="submit">탐색</button>
+</form>
+<div class="screen-block"></div>
+<script>param.init();</script>
+</body>
+</html>
