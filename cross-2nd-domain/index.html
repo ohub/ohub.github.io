@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>inside iframe demo - ohub</title>
     <script>
-        parent.hello();
+        if (window.parent === window.top) {
+            try {
+                parent.hello();
+            } catch(e) {
+                parent.postMessage("hello!", "https://ohub.github.io");
+            }
+        }
     </script>
 </head>
 
