@@ -7,6 +7,7 @@
     <title>inside iframe demo - ohub</title>
     <script>
         if (window.parent === window.top) {
+            console.log('ok', window.parent);
             try {
                 parent.hello();
             } catch(e) {
