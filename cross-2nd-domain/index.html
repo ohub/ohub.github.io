@@ -6,13 +6,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>inside iframe demo - ohub</title>
     <script>
-        if (window.parent === window.top) {
-            try {
-                parent.hello();
-            } catch(e) {
-                parent.postMessage("hello by event!", "https://oshx.github.io");
-            }
-        }
+var searchParamOrigin = location.search.split('&');
+var searchParam = {};
+for (var i = 0, iMax = searchParamOrigin.length; i<iMax; i++) {
+    var tempSplitObject = searchParamOrigin[i].split('=');
+    if (tempSplitObject.length > 0) {
+        searchParam[tempSplitObject[0]] = tempSplitObject[1];
+    }
+}
+var domain = searchParam.domain || 'https://oshx.github.io';
+if (window.parent === window.top) {
+    try {
+        parent.hello();
+    } catch(e) {
+        parent.postMessage("alert called by inside iframe! (ohub.github.io)", domain);
+    }
+}
     </script>
 </head>
 
