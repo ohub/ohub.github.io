@@ -5,28 +5,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>inside iframe demo - ohub</title>
-    <script>
-var searchParamOrigin = location.search.split('&');
-var searchParam = {};
-for (var i = 0, iMax = searchParamOrigin.length; i<iMax; i++) {
-    var tempSplitObject = searchParamOrigin[i].split('=');
-    if (tempSplitObject.length > 0) {
-        searchParam[tempSplitObject[0]] = tempSplitObject[1];
-    }
-}
-var domain = searchParam.domain || 'https://oshx.github.io';
-if (window.parent === window.top) {
-    try {
-        parent.postMessage("alert called by inside iframe! (ohub.github.io)", domain);
-    } catch(e) {
-        window.top.hello();
-    }
-}
-    </script>
 </head>
 
 <body>
     <h1>inside iframe demo - ohub</h1>
+    <iframe src="https://oshx.github.io/study/cross-2nd-domain/override">
+    <script>
+(function(){
+    'use strict';
+    var param;
+    function init(){
+        param = getParam();
+    }
+    function getParam(){
+        var orgParam = location.search.replace(/\?/,'').split('&');
+        var returnObject = {};
+        if (orgParam.length === 1 && orgParam[0] === '') {
+            return returnObject;
+        }
+        for (var i=0, iMax = orgParam.length; i<iMax; i++) {
+            var objectParam = orgParam[i].split('=');
+            if (objectParam.length > 0) {
+                returnObject[objectParam[0]] = objectParam[1];
+            }
+        }
+        return returnObject;
+    }
+    function isMessage
+    return init();
+})();
+</script>
 </body>
 
 </html>
