@@ -11,29 +11,6 @@
     <h1>inside iframe demo - ohub</h1>
     <iframe src="https://oshx.github.io/study/cross-2nd-domain/override/"></iframe>
     <script>
-(function(){
-    'use strict';
-    var param;
-    function init(){
-        param = getParam();
-    }
-    function getParam(){
-        var orgParam = location.search.replace(/\?/,'').split('&');
-        var returnObject = {};
-        if (orgParam.length === 1 && orgParam[0] === '') {
-            return returnObject;
-        }
-        for (var i=0, iMax = orgParam.length; i<iMax; i++) {
-            var objectParam = orgParam[i].split('=');
-            if (objectParam.length > 0) {
-                returnObject[objectParam[0]] = objectParam[1];
-            }
-        }
-        return returnObject;
-    }
-    function isMessage
-    return init();
-})();
 </script>
 </body>
 
